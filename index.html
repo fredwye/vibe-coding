@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accueil</title>
+<meta name="description" content="Page d'accueil.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --text: #1f1f1f;
+    --muted: #6b6b6b;
+    --line: #e5e5e5;
+    --soft: #f6f6f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #161616; --text: #ececec; --muted: #9a9a9a; --line: #2c2c2c; --soft: #1e1e1e;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #161616; --text: #ececec; --muted: #9a9a9a; --line: #2c2c2c; --soft: #1e1e1e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 400 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+
+  header { border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; justify-content: space-between; align-items: center; height: 60px; }
+  .logo { font-weight: 600; text-decoration: none; }
+  nav { display: flex; gap: 24px; }
+  nav a { text-decoration: none; color: var(--muted); font-size: 15px; }
+  nav a:hover { color: var(--text); }
+
+  .hero { padding: 96px 0 72px; }
+  .maj { display: inline-block; margin-top: 16px !important; padding: 4px 12px; border-radius: 999px; background: #e8f5e9; color: #2e7d32 !important; font-size: 14px !important; }
+  .hero h1 { font-size: clamp(36px, 6vw, 56px); line-height: 1.1; font-weight: 600; letter-spacing: -.01em; }
+  .hero p { margin-top: 20px; max-width: 52ch; color: var(--muted); font-size: 19px; }
+  .btn {
+    display: inline-block; margin-top: 32px; padding: 12px 22px;
+    border: 1px solid var(--text); border-radius: 6px;
+    text-decoration: none; font-weight: 500;
+  }
+  .btn:hover { background: var(--text); color: var(--bg); }
+
+  section { padding: 64px 0; border-top: 1px solid var(--line); }
+  section h2 { font-size: 26px; font-weight: 600; margin-bottom: 24px; }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .box { background: var(--soft); border: 1px solid var(--line); border-radius: 8px; padding: 24px; }
+  .box h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+  .box p { color: var(--muted); font-size: 15px; }
+
+  .text p { max-width: 62ch; color: var(--muted); }
+  .text p + p { margin-top: 1em; }
+
+  footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--muted); font-size: 14px; }
+
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+    .hero { padding: 64px 0 48px; }
+    nav { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="index.html">Mon site</a>
+    <nav>
+      <a href="#presentation">Présentation</a>
+      <a href="#contenu">Contenu</a>
+      <a href="outils.html">Outils</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <h1>Bienvenue sur mon site</h1>
+    <p class="maj">Mis à jour le 8 octobre 2026</p>
+    <p>Ceci est une page d'accueil simple. Remplacez ce texte par une courte phrase qui présente le site.</p>
+    <a class="btn" href="#presentation">En savoir plus</a>
+  </div>
+
+  <section id="presentation">
+    <div class="wrap text">
+      <h2>Présentation</h2>
+      <p>Ce paragraphe sert à décrire le sujet du site en quelques lignes : de quoi il parle, à qui il s'adresse et ce qu'on peut y trouver.</p>
+      <p>Un second paragraphe peut apporter un complément d'information ou un contexte supplémentaire.</p>
+    </div>
+  </section>
+
+  <section id="contenu">
+    <div class="wrap">
+      <h2>Contenu</h2>
+      <div class="grid">
+        <div class="box">
+          <h3>Rubrique 1</h3>
+          <p>Courte description de la première rubrique.</p>
+        </div>
+        <div class="box">
+          <h3>Rubrique 2</h3>
+          <p>Courte description de la deuxième rubrique.</p>
+        </div>
+        <div class="box">
+          <h3>Rubrique 3</h3>
+          <p>Courte description de la troisième rubrique.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap text">
+      <h2>Contact</h2>
+      <p>Pour toute question, écrivez à : <a href="mailto:contact@exemple.com">contact@exemple.com</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="y">2026</span> Mon site</div>
+</footer>
+
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>

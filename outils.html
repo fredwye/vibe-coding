@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inventaire des outils</title>
+<meta name="description" content="Inventaire des outils de vibe-coding : comparaison d'un post X (25 ressources) et de la liste awesome-vibecoding.">
+<style>
+  :root{
+    --bg:#f6f4ef; --surface:#ffffff; --ink:#1c1b19; --muted:#6b675f; --line:#e2ded5;
+    --a:#c2410c; --a-soft:#fdeee4; --b:#1d4ed8; --b-soft:#e6edfd; --ok:#15803d; --ok-soft:#e3f4e8;
+    --warn:#a16207; --warn-soft:#fbf1d6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#141413; --surface:#1d1c1a; --ink:#ecebe6; --muted:#a29e94; --line:#33312d;
+      --a:#fb923c; --a-soft:#3a2416; --b:#7aa2ff; --b-soft:#1b2540; --ok:#4ade80; --ok-soft:#163020;
+      --warn:#facc15; --warn-soft:#352c10;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#141413; --surface:#1d1c1a; --ink:#ecebe6; --muted:#a29e94; --line:#33312d;
+    --a:#fb923c; --a-soft:#3a2416; --b:#7aa2ff; --b-soft:#1b2540; --ok:#4ade80; --ok-soft:#163020;
+    --warn:#facc15; --warn-soft:#352c10;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:1080px;margin:0 auto;padding:40px 16px 80px}
+  header h1{font-size:clamp(28px,5vw,44px);line-height:1.1;margin:0 0 12px;letter-spacing:-.02em}
+  .kicker{font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:0 0 8px}
+  .lead{font-size:18px;color:var(--muted);max-width:720px;margin:0}
+  h2{font-size:24px;margin:56px 0 12px;letter-spacing:-.01em}
+  h3{font-size:18px;margin:28px 0 8px}
+  p{max-width:760px}
+  a{color:inherit;text-decoration-color:var(--muted);text-underline-offset:3px}
+  a:hover{text-decoration-color:var(--ink)}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 0}
+  nav.toc a{font-size:14px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;
+    text-decoration:none;background:var(--surface)}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
+  .card h3{margin-top:0}
+  .card.a{border-top:4px solid var(--a)} .card.b{border-top:4px solid var(--b)}
+  dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 14px;margin:0;font-size:15px}
+  dt{color:var(--muted)} dd{margin:0}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:16px 0}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .stat b{display:block;font-size:30px;line-height:1.1}
+  .stat span{font-size:14px;color:var(--muted)}
+  .tablebox{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:var(--bg);position:sticky;top:0}
+  tr:last-child td{border-bottom:0}
+  td.num{color:var(--muted);font-variant-numeric:tabular-nums;width:2.5em}
+  .tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;white-space:nowrap;
+    background:var(--bg);border:1px solid var(--line)}
+  .yes{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+  .no{background:var(--bg);color:var(--muted)}
+  .part{background:var(--warn-soft);color:var(--warn);border-color:transparent}
+  .tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:16px 0}
+  input[type=search]{flex:1;min-width:220px;padding:10px 14px;font:inherit;border:1px solid var(--line);
+    border-radius:10px;background:var(--surface);color:var(--ink)}
+  .count{font-size:14px;color:var(--muted)}
+  .callout{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--warn);
+    border-radius:8px;padding:14px 18px;margin:16px 0;max-width:760px}
+  ul.check{padding-left:20px} ul.check li{margin:6px 0}
+  .compare th:first-child{width:22%}
+  .shot{display:block;max-width:260px;border:1px solid var(--line);border-radius:8px}
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+  @media (max-width:600px){ th,td{padding:8px} .hide-sm{display:none} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="kicker"><a href="index.html">← Accueil</a></p>
+  <p class="kicker">Exercice · Vibe-coding · 15 octobre 2026</p>
+  <h1>Inventaire des outils de vibe-coding</h1>
+  <p class="lead">Deux sources de nature différente comparées côte à côte : une liste virale publiée sur X et une liste « awesome » vérifiée et datée sur GitHub. Que recommandent-elles, où se recoupent-elles, et laquelle croire pour quoi ?</p>
+  <nav class="toc" aria-label="Sommaire">
+    <a href="#sources">Les deux sources</a>
+    <a href="#source-a">Source A · 25 ressources</a>
+    <a href="#source-b">Source B · par tâche</a>
+    <a href="#comparaison">Comparaison</a>
+    <a href="#critique">Lecture critique</a>
+    <a href="#conclusion">Conclusion</a>
+  </nav>
+</header>
+
+<!-- ============ SOURCES ============ -->
+<section id="sources">
+  <h2>Les deux sources</h2>
+  <div class="grid2">
+    <div class="card a">
+      <h3>Source A — Post X/Twitter</h3>
+      <dl>
+        <dt>Auteur</dt><dd>Himanshu Hingorani (@himanshubuildss), fondateur de scrolltide.co</dd>
+        <dt>Date</dt><dd>9 octobre 2026</dd>
+        <dt>Titre</dt><dd>« 25 vibe coding resources »</dd>
+        <dt>Format</dt><dd>Post unique, liste numérotée, une ligne par ressource</dd>
+        <dt>Audience</dt><dd>≈ 18,2 k vues, 563 signets, 216 j’aime (au moment de la capture)</dd>
+        <dt>Vérification</dt><dd>Aucune date de vérification, aucun prix, aucune condition d’accès</dd>
+        <dt>Support</dt><dd>Capture d’écran du post</dd>
+      </dl>
+    </div>
+    <div class="card b">
+      <h3>Source B — Dépôt GitHub</h3>
+      <dl>
+        <dt>Dépôt</dt><dd><a href="https://github.com/Scap-Mehdi/awesome-vibecoding">Scap-Mehdi/awesome-vibecoding</a> (fork de roboco-io)</dd>
+        <dt>Version FR</dt><dd><a href="https://github.com/Scap-Mehdi/awesome-vibecoding/blob/main/README.fr.md"><code>README.fr.md</code></a></dd>
+        <dt>Format</dt><dd>Liste « awesome » classée par tâche, avec accès/prix et date de vérification par entrée</dd>
+        <dt>Revue</dt><dd>Revue de cycle de vie du 18/09/2026 : liste réduite de 156 à 40 outils ; ajouts revus jusqu’au 04/10/2026</dd>
+        <dt>Politique</dt><dd>Critères d’admission publics, historique des retraits, mise à jour hebdomadaire automatisée</dd>
+        <dt>Licence</dt><dd>CC0 1.0 (domaine public)</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOURCE A ============ -->
+<section id="source-a">
+  <h2>Source A · les 25 ressources du post</h2>
+  <p>Chaque ressource est reclassée selon sa fonction réelle. La colonne « Dans B ? » indique si elle figure dans la liste awesome-vibecoding. Les descriptions sont reformulées à partir du post ; les liens n’ont pas été vérifiés un à un.</p>
+
+  <div class="stats">
+    <div class="stat"><b>8</b><span>Animation &amp; effets</span></div>
+    <div class="stat"><b>7</b><span>Composants UI</span></div>
+    <div class="stat"><b>6</b><span>Inspiration &amp; références design</span></div>
+    <div class="stat"><b>3</b><span>Prompts &amp; contexte pour agents</span></div>
+    <div class="stat"><b>1</b><span>Assets (icônes 3D)</span></div>
+    <div class="stat"><b>0</b><span>présentes dans la Source B</span></div>
+  </div>
+
+  <div class="tools">
+    <input type="search" id="filterA" placeholder="Filtrer les 25 ressources (nom, catégorie…)" aria-label="Filtrer la Source A">
+    <span class="count" id="countA"></span>
+  </div>
+  <div class="tablebox">
+    <table id="tableA">
+      <thead><tr><th>#</th><th>Ressource</th><th>Ce que c’est</th><th>Catégorie</th><th>Dans B ?</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td><a href="https://scrolltide.co">scrolltide.co</a></td><td>Prompts et code source de sites 3D / à défilement, à coller dans un agent. <em>Produit de l’auteur du post.</em></td><td><span class="tag">Prompts &amp; contexte</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">2</td><td><a href="https://minimal.gallery">minimal.gallery</a></td><td>Galerie de sites épurés à donner en référence à un agent</td><td><span class="tag">Inspiration</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">3</td><td><a href="https://godly.website">godly.website</a></td><td>Sélection de sites au design soigné</td><td><span class="tag">Inspiration</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">4</td><td><a href="https://styles.refero.design">styles.refero.design</a></td><td>Styles visuels et typographie relevés sur des produits réels</td><td><span class="tag">Référence design</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">5</td><td><a href="https://component.gallery">component.gallery</a></td><td>Comment les design systems traitent un même composant</td><td><span class="tag">Référence design</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">6</td><td><a href="https://mobbin.com">mobbin.com</a></td><td>Parcours d’applications réelles (UX)</td><td><span class="tag">Référence design</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">7</td><td><a href="https://designmd.ai">designmd.ai</a></td><td>Design systems rédigés en Markdown, lisibles par un agent</td><td><span class="tag">Prompts &amp; contexte</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">8</td><td><a href="https://vibeprompts.dev">vibeprompts.dev</a></td><td>Prompts prêts à l’emploi pour tableaux de bord et landing pages</td><td><span class="tag">Prompts &amp; contexte</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">9</td><td><a href="https://21st.dev">21st.dev</a></td><td>Registre de composants branché aux agents via MCP</td><td><span class="tag">Composants UI</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">10</td><td><a href="https://kinetics.colorion.co">kinetics.colorion.co</a></td><td>Effets de mouvement avec code React et prompts</td><td><span class="tag">Animation &amp; effets</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">11</td><td><a href="https://ui.shadcn.com">shadcn/ui</a></td><td>Bibliothèque de composants réutilisables, standard de fait</td><td><span class="tag">Composants UI</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">12</td><td><a href="https://ui.aceternity.com">Aceternity UI</a></td><td>Composants React/Tailwind animés</td><td><span class="tag">Composants UI</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">13</td><td><a href="https://magicui.design">Magic UI</a></td><td>Composants pour applications web modernes</td><td><span class="tag">Composants UI</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">14</td><td><a href="https://motion-primitives.com">Motion Primitives</a></td><td>Composants d’animation et d’interaction</td><td><span class="tag">Animation &amp; effets</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">15</td><td><a href="https://uiverse.io">Uiverse</a></td><td>Éléments d’interface créés par la communauté</td><td><span class="tag">Composants UI</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">16</td><td><a href="https://shadcnblocks.com">Shadcnblocks</a></td><td>Blocs de pages complets basés sur shadcn</td><td><span class="tag">Composants UI</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">17</td><td><a href="https://mapcn.dev">mapcn</a></td><td>Composants de cartes : marqueurs, itinéraires, popups</td><td><span class="tag">Composants UI</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">18</td><td><a href="https://awwwards.com">Awwwards</a></td><td>Sites primés, référence historique du web design</td><td><span class="tag">Inspiration</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">19</td><td><a href="https://glass.samasante.com">Liquid Glass</a></td><td>Composants à effet de réfraction « verre »</td><td><span class="tag">Animation &amp; effets</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">20</td><td><a href="https://text-effects.colorion.co">CSS Text Effects</a></td><td>Animations et effets de texte en CSS</td><td><span class="tag">Animation &amp; effets</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">21</td><td><a href="https://circleloaders.dominikakissi.com">Circle Loaders</a></td><td>Animations de chargement</td><td><span class="tag">Animation &amp; effets</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">22</td><td><a href="https://gradientbuttons.colorion.co">Gradient Buttons</a></td><td>Boutons en dégradé</td><td><span class="tag">Animation &amp; effets</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">23</td><td><a href="https://shadertoy.com">Shadertoy</a></td><td>Shaders à étudier et remixer</td><td><span class="tag">Animation &amp; effets</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">24</td><td><a href="https://3dicons.co">3Dicons</a></td><td>Icônes 3D gratuites</td><td><span class="tag">Assets</span></td><td><span class="tag no">Non</span></td></tr>
+        <tr><td class="num">25</td><td><a href="https://animejs.com">Anime.js</a></td><td>Bibliothèque JavaScript d’animation légère</td><td><span class="tag">Animation &amp; effets</span></td><td><span class="tag no">Non</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ SOURCE B ============ -->
+<section id="source-b">
+  <h2>Source B · les outils par tâche</h2>
+  <p>La page principale d’awesome-vibecoding classe ses outils selon ce que l’on veut faire, du code au déploiement. Chaque entrée porte une condition d’accès et une date de vérification (le 18/09/2026 pour la plupart). Les ressources d’apprentissage (guides, articles, papiers) ne sont pas reprises ici.</p>
+
+  <div class="tools">
+    <input type="search" id="filterB" placeholder="Filtrer les outils (nom, tâche, MCP…)" aria-label="Filtrer la Source B">
+    <span class="count" id="countB"></span>
+  </div>
+  <div class="tablebox">
+    <table id="tableB">
+      <thead><tr><th>Outil</th><th>Usage</th><th>Tâche</th><th class="hide-sm">Accès</th><th>Vérifié</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://github.com/Aider-AI/aider">Aider</a> · CLI</td><td>Programmation en binôme dans le terminal, modèles cloud ou locaux, intégré à Git</td><td><span class="tag">Code</span></td><td class="hide-sm">Client open source ; coût API/modèle</td><td>18/09</td></tr>
+        <tr><td><a href="https://code.claude.com/docs/en/overview">Claude Code</a> · CLI</td><td>Assistant de code agentique en terminal</td><td><span class="tag">Code</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/cline/cline">Cline</a></td><td>Agent de code pour IDE, terminal et bureau</td><td><span class="tag">Code</span></td><td class="hide-sm">Client + fournisseur de modèle</td><td>18/09</td></tr>
+        <tr><td><a href="https://www.cursor.com/">Cursor</a> · IDE</td><td>Éditeur et agent : implémenter, déboguer, relire</td><td><span class="tag">Code</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/google-gemini/gemini-cli">Gemini CLI</a> · CLI</td><td>Agent terminal open source de Google</td><td><span class="tag">Code</span></td><td class="hide-sm">API/Vertex ; accès grand public retiré</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/features/copilot">GitHub Copilot</a></td><td>Assistance et agents dans GitHub et les IDE</td><td><span class="tag">Code</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/aaif-goose/goose">Goose</a> · CLI</td><td>Agent local extensible, outils MCP</td><td><span class="tag">Code</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://kiro.dev">Kiro</a> · IDE</td><td>Agent AWS centré sur spécifications et tests</td><td><span class="tag">Code</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://openai.com/codex/">OpenAI Codex CLI</a> · CLI</td><td>Agent OpenAI exécuté localement</td><td><span class="tag">Code</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/earendil-works/pi">Pi</a> · CLI</td><td>Agent terminal extensible, multi-fournisseurs</td><td><span class="tag">Code</span></td><td class="hide-sm">Client MIT</td><td>18/09</td></tr>
+
+        <tr><td><a href="https://bolt.new/">Bolt.new</a> · Web</td><td>Créer une app en langage naturel (StackBlitz)</td><td><span class="tag">App &amp; UI</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/dyad-sh/dyad">Dyad</a> · Desktop</td><td>Créer des apps en local, modèles au choix</td><td><span class="tag">App &amp; UI</span></td><td class="hide-sm">Coûts du modèle</td><td>18/09</td></tr>
+        <tr><td><a href="https://lovable.dev/">Lovable</a> · Web</td><td>Génération d’apps complètes avec Supabase</td><td><span class="tag">App &amp; UI</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://www.onlook.com/">Onlook</a> · Web</td><td>Éditer visuellement une interface tout en restant dans le code</td><td><span class="tag">App &amp; UI</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://replit.com/">Replit</a> · Web</td><td>Construire et itérer avec Replit Agent</td><td><span class="tag">App &amp; UI</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://v0.app/">v0</a> · Web</td><td>Génération d’interfaces React par Vercel</td><td><span class="tag">App &amp; UI</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+
+        <tr><td><a href="https://github.com/caliber-ai-org/ai-setup">Caliber</a></td><td>Génère et synchronise les configs d’agents</td><td><span class="tag">Contexte &amp; specs</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/upstash/context7">Context7</a> · MCP</td><td>Documentation de bibliothèques pour le contexte</td><td><span class="tag">Contexte &amp; specs</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem">Filesystem MCP</a> · MCP</td><td>Accès contrôlé aux fichiers du projet</td><td><span class="tag">Contexte &amp; specs</span></td><td class="hide-sm">Implémentation de référence</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/github/github-mcp-server">GitHub MCP</a> · MCP</td><td>Dépôts, issues et pull requests</td><td><span class="tag">Contexte &amp; specs</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/neondatabase/mcp-server-neon">Neon</a> · MCP</td><td>Bases de données Neon</td><td><span class="tag">Contexte &amp; specs</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://developers.notion.com/guides/mcp/overview">Notion MCP</a> · MCP</td><td>Lire et mettre à jour Notion</td><td><span class="tag">Contexte &amp; specs</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/Fission-AI/OpenSpec">OpenSpec</a></td><td>Développement piloté par les spécifications</td><td><span class="tag">Contexte &amp; specs</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/supabase/mcp">Supabase MCP</a> · MCP</td><td>Schémas, requêtes, configuration Supabase</td><td><span class="tag">Contexte &amp; specs</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+
+        <tr><td><a href="https://github.com/vostride/agent-qa">Agent QA</a> · MCP</td><td>Tests web et mobile en langage naturel</td><td><span class="tag">Test &amp; sécurité</span></td><td class="hide-sm">FSL-1.1 ; coûts modèle</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/microsoft/playwright-mcp">Playwright MCP</a> · MCP</td><td>Automatisation de navigateur (Microsoft)</td><td><span class="tag">Test &amp; sécurité</span></td><td class="hide-sm">Apache-2.0</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/The-PR-Agent/pr-agent">PR-Agent</a></td><td>Relecture de pull requests</td><td><span class="tag">Test &amp; sécurité</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://getprbl.com">Prbl</a> · Web</td><td>Repère les failles typiques du code généré par IA</td><td><span class="tag">Test &amp; sécurité</span></td><td class="hide-sm">Scan gratuit ; offres payantes</td><td>23/09</td></tr>
+        <tr><td><a href="https://www.qodo.ai">Qodo</a></td><td>Moteur de relecture de code (ex-CodiumAI)</td><td><span class="tag">Test &amp; sécurité</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/semgrep/semgrep/tree/develop/cli/src/semgrep/mcp">Semgrep MCP</a> · MCP</td><td>Analyse de sécurité</td><td><span class="tag">Test &amp; sécurité</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/getsentry/sentry-mcp">Sentry</a> · MCP</td><td>Erreurs applicatives et diagnostic</td><td><span class="tag">Test &amp; sécurité</span></td><td class="hide-sm">FSL ; voir conditions</td><td>18/09</td></tr>
+
+        <tr><td><a href="https://github.com/cloudflare/mcp-server-cloudflare">Cloudflare</a> · MCP</td><td>Déploiement et ressources cloud</td><td><span class="tag">Déploiement</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/e2b-dev/E2B">E2B</a></td><td>Bac à sable cloud sécurisé pour agents</td><td><span class="tag">Déploiement</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+        <tr><td><a href="https://publish.my/">Publish.my</a> · Web</td><td>Publication de sites statiques par un agent</td><td><span class="tag">Déploiement</span></td><td class="hide-sm">Gratuit ; statique seulement</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/getsentry/XcodeBuildMCP">XcodeBuildMCP</a> · MCP</td><td>Compiler et déboguer des projets Apple</td><td><span class="tag">Déploiement</span></td><td class="hide-sm">Voir tarifs</td><td>18/09</td></tr>
+
+        <tr><td><a href="https://delta.dev/">Delta (Zed)</a> · Desktop</td><td>Espace multijoueur pour piloter et relire des agents</td><td><span class="tag">Espaces &amp; usage</span></td><td class="hide-sm">Gratuit en bêta</td><td>20/09</td></tr>
+        <tr><td><a href="https://github.com/MusicMaster4/Duckweed">Duckweed</a> · Desktop</td><td>Agents, shells et diffs Git dans un espace local</td><td><span class="tag">Espaces &amp; usage</span></td><td class="hide-sm">Source disponible</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/lanesket/llm.log">llm.log</a></td><td>Coûts, tokens et traces via un proxy local</td><td><span class="tag">Espaces &amp; usage</span></td><td class="hide-sm">MIT</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/johannesjo/parallel-code">Parallel Code</a> · Desktop</td><td>Agents en parallèle dans des worktrees Git isolés</td><td><span class="tag">Espaces &amp; usage</span></td><td class="hide-sm">MIT</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/shep-ai/shep">Shep</a> · CLI</td><td>Orchestration d’agents jusqu’à la PR brouillon</td><td><span class="tag">Espaces &amp; usage</span></td><td class="hide-sm">Client MIT</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/pungme/superagent-desktop">Superagent</a> · Desktop</td><td>Claude Code ou Codex dans un espace macOS</td><td><span class="tag">Espaces &amp; usage</span></td><td class="hide-sm">MIT ; macOS Apple Silicon</td><td>18/09</td></tr>
+        <tr><td><a href="https://github.com/aqua5230/usage">usage</a> · Desktop</td><td>Quotas des agents dans la barre de menus</td><td><span class="tag">Espaces &amp; usage</span></td><td class="hide-sm">AGPL-3.0</td><td>18/09</td></tr>
+        <tr><td><a href="https://www.warp.dev/terminal">Warp Terminal</a></td><td>Terminal orienté agents</td><td><span class="tag">Espaces &amp; usage</span></td><td class="hide-sm">Voir tarifs IA</td><td>18/09</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ COMPARAISON ============ -->
+<section id="comparaison">
+  <h2>Comparaison</h2>
+
+  <h3>Recoupements</h3>
+  <p><strong>Aucune des 25 ressources du post n’apparaît dans la liste awesome-vibecoding.</strong> Les seuls points de contact sont indirects :</p>
+  <ul class="check">
+    <li><span class="tag part">Indirect</span> Le post invite à coller les prompts de scrolltide dans <em>Claude, Cursor ou Lovable</em> — trois outils qui figurent bien dans la Source B (Claude Code, Cursor, Lovable).</li>
+    <li><span class="tag part">Indirect</span> 21st.dev se branche aux agents via <em>MCP</em>, le protocole que la Source B utilise comme fil conducteur (Context7, GitHub MCP, Playwright MCP…).</li>
+    <li><span class="tag part">Indirect</span> Plusieurs composants du post (shadcn/ui, Aceternity, Magic UI) reposent sur React/Tailwind, la pile que produisent v0, Bolt ou Lovable.</li>
+  </ul>
+
+  <h3>Deux listes, deux métiers</h3>
+  <div class="tablebox compare">
+    <table>
+      <thead><tr><th>Critère</th><th>Source A · post X</th><th>Source B · awesome-vibecoding</th></tr></thead>
+      <tbody>
+        <tr><td>Question traitée</td><td>À quoi doit <em>ressembler</em> ce que je fais générer ?</td><td>Avec quoi je <em>fabrique</em>, teste et publie ?</td></tr>
+        <tr><td>Nature des entrées</td><td>Galeries, bibliothèques de composants, effets, prompts</td><td>Agents de code, générateurs d’apps, serveurs MCP, tests, déploiement</td></tr>
+        <tr><td>Étape du projet</td><td>Direction artistique et interface</td><td>Tout le cycle : code → contexte → test → déploiement → suivi</td></tr>
+        <tr><td>Classement</td><td>Liste numérotée, sans catégories</td><td>Par tâche, avec mode d’usage (CLI, IDE, Web, Desktop, MCP)</td></tr>
+        <tr><td>Datation</td><td>Date du post uniquement</td><td>Date de vérification par entrée + journal des mises à jour</td></tr>
+        <tr><td>Accès &amp; prix</td><td>Non mentionnés</td><td>Indiqués (ou « voir tarifs » quand non vérifié)</td></tr>
+        <tr><td>Sécurité</td><td>Absente</td><td>Catégorie dédiée + guide de sécurité</td></tr>
+        <tr><td>Conflit d’intérêts</td><td>N° 1 = produit de l’auteur, non signalé dans la liste</td><td>Affiliations à déclarer selon la politique de curation</td></tr>
+        <tr><td>Maintenance</td><td>Figée au moment de la publication</td><td>Mise à jour hebdomadaire ; entrées retirées historisées</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ CRITIQUE ============ -->
+<section id="critique">
+  <h2>Lecture critique</h2>
+
+  <div class="grid2">
+    <div class="card a">
+      <h3>Source A — ce qu’il faut savoir</h3>
+      <ul class="check">
+        <li>La ressource placée en tête (scrolltide.co) appartient à l’auteur : sa bio le présente comme fondateur, et sa première réponse sous le post y renvoie encore. C’est une liste promotionnelle autant qu’un inventaire.</li>
+        <li>Les chiffres (« 600+ », « 2 000+ », « award-winning ») ne sont pas sourcés.</li>
+        <li>Trois ressources viennent du même éditeur (sous-domaines de colorion.co) : la diversité affichée est moindre qu’il n’y paraît.</li>
+        <li>Le titre parle de « vibe coding », mais aucune ressource ne sert à coder, tester ou publier : c’est une boîte à outils de design web.</li>
+        <li>Le format (« Save it », « ahead of the competition ») vise l’engagement — 563 signets pour 18 k vues.</li>
+      </ul>
+    </div>
+    <div class="card b">
+      <h3>Source B — ses propres limites</h3>
+      <ul class="check">
+        <li>La plupart des prix sont marqués « voir tarifs » : la liste dit honnêtement qu’elle ne les a pas vérifiés.</li>
+        <li>Une date de vérification confirme l’offre à ce jour, pas une audit de sécurité ni une garantie de pérennité (la liste le précise elle-même).</li>
+        <li>Les mises à jour sont automatisées par un agent IA : la vérification repose en partie sur l’outil qu’elle recense.</li>
+        <li>Rien sur la direction artistique ou les composants d’interface : la Source B ne répond pas à la question de la Source A.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Une liste datée n’est pas une liste exhaustive.</strong> La Source B a volontairement réduit son inventaire de 156 à 40 outils ; l’absence d’une ressource n’est donc pas un verdict contre elle, seulement l’absence de preuve vérifiée à cette date.
+  </div>
+</section>
+
+<!-- ============ CONCLUSION ============ -->
+<section id="conclusion">
+  <h2>Conclusion</h2>
+  <p>Les deux sources ne sont pas concurrentes : elles ne parlent pas du même moment du projet. La Source B dit <strong>quels outils utiliser pour construire</strong> et dans quelles conditions ; la Source A fournit <strong>de la matière visuelle et des références</strong> à donner à ces outils.</p>
+  <p>Pour un projet réel, une méthode raisonnable :</p>
+  <ol>
+    <li>Choisir son agent ou générateur dans la Source B (par exemple Claude Code ou Cursor), en lisant les conditions d’accès.</li>
+    <li>Puiser des références de style et des composants dans la Source A (Awwwards, Mobbin, shadcn/ui), en vérifiant soi-même chaque lien et sa licence.</li>
+    <li>Repasser par la Source B pour les tests, la sécurité et le déploiement — ici via Cloudflare Pages.</li>
+  </ol>
+  <p>À fiabilité égale, la confiance se mérite par la transparence : date, méthode, conditions d’accès et conflits d’intérêts déclarés. Sur ces quatre critères, la Source B l’emporte nettement.</p>
+</section>
+
+<footer>
+  <p><strong>Sources</strong> — A : capture du post de Himanshu Hingorani sur X, 9 oct. 2026. B : <a href="https://github.com/Scap-Mehdi/awesome-vibecoding">github.com/Scap-Mehdi/awesome-vibecoding</a> et <a href="https://github.com/Scap-Mehdi/awesome-vibecoding/blob/main/README.fr.md">README.fr.md</a>, consultés le 15 oct. 2026.</p>
+  <p>Inventaire réalisé dans le cadre de l’exercice Vibe-coding. Publié via Cloudflare Pages.</p>
+</footer>
+
+</div>
+<script>
+  function setupFilter(inputId, tableId, countId, label){
+    var input = document.getElementById(inputId);
+    var rows = Array.prototype.slice.call(document.querySelectorAll('#' + tableId + ' tbody tr'));
+    var count = document.getElementById(countId);
+    function norm(s){ return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+    function update(){
+      var q = norm(input.value.trim()); var n = 0;
+      rows.forEach(function(r){
+        var show = !q || norm(r.textContent).indexOf(q) !== -1;
+        r.style.display = show ? '' : 'none'; if (show) n++;
+      });
+      count.textContent = n + ' / ' + rows.length + ' ' + label;
+    }
+    input.addEventListener('input', update); update();
+  }
+  setupFilter('filterA','tableA','countA','ressources');
+  setupFilter('filterB','tableB','countB','outils');
+</script>
+</body>
+</html>
