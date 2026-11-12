@@ -67,6 +67,10 @@
     .hero { padding: 64px 0 48px; }
     nav { gap: 16px; }
   }
+
+  .foot-nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0 0 12px; padding: 0; }
+  .foot-nav a { color: inherit; }
+  a:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
 </style>
 </head>
 <body>
@@ -128,7 +132,19 @@
 </main>
 
 <footer>
-  <div class="wrap">© <span id="y">2026</span> Mon site</div>
+  <div class="wrap">
+    <nav aria-label="Pied de page" class="foot-nav">
+      <ul>
+        <li><a href="aide.html">Aide</a></li>
+        <li><a href="info-site.html">Info site</a></li>
+        <li><a href="accessibilite.html">Accessibilité : non conforme</a></li>
+        <li><a href="index.html">Site de Organisme de démonstration</a></li>
+        <li><a href="donnees-personnelles.html">Cookies / Données personnelles</a></li>
+        <li><a href="mentions-legales.html">Mentions légales</a></li>
+      </ul>
+    </nav>
+    <p>© <span id="y">2026</span> Mon site</p>
+  </div>
 </footer>
 
 <script>document.getElementById('y').textContent = new Date().getFullYear();</script>

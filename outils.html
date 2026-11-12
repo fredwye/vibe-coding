@@ -70,6 +70,10 @@
   .shot{display:block;max-width:260px;border:1px solid var(--line);border-radius:8px}
   footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
   @media (max-width:600px){ th,td{padding:8px} .hide-sm{display:none} }
+
+  .foot-nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0 0 12px; padding: 0; }
+  .foot-nav a { color: inherit; }
+  a:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
 </style>
 </head>
 <body>
@@ -314,6 +318,16 @@
 </section>
 
 <footer>
+  <nav aria-label="Pied de page" class="foot-nav">
+      <ul>
+        <li><a href="aide.html">Aide</a></li>
+        <li><a href="info-site.html">Info site</a></li>
+        <li><a href="accessibilite.html">Accessibilité : non conforme</a></li>
+        <li><a href="index.html">Site de Organisme de démonstration</a></li>
+        <li><a href="donnees-personnelles.html">Cookies / Données personnelles</a></li>
+        <li><a href="mentions-legales.html">Mentions légales</a></li>
+      </ul>
+    </nav>
   <p><strong>Sources</strong> — A : capture du post de Himanshu Hingorani sur X, 9 oct. 2026. B : <a href="https://github.com/Scap-Mehdi/awesome-vibecoding">github.com/Scap-Mehdi/awesome-vibecoding</a> et <a href="https://github.com/Scap-Mehdi/awesome-vibecoding/blob/main/README.fr.md">README.fr.md</a>, consultés le 15 oct. 2026.</p>
   <p>Inventaire réalisé dans le cadre de l’exercice Vibe-coding. Publié via Cloudflare Pages.</p>
 </footer>
