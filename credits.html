@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crédits et propriété intellectuelle — Mon site</title>
+<meta name="description" content="Licence du code, composants tiers, ressources graphiques et transparence sur l'usage de l'IA.">
+<link rel="stylesheet" href="pages.css">
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header>
+  <div class="wrap"><a class="logo" href="index.html">Mon site</a></div>
+</header>
+<main id="contenu">
+  <div class="wrap">
+    <h1>Crédits et propriété intellectuelle</h1>
+    <p>Cette page indique d'où viennent les composants du site, sous quelle licence ils sont utilisés et comment l'intelligence artificielle a servi à le construire.</p>
+
+    <h2>Éditeur et licence du code source</h2>
+    <ul>
+      <li>Code source : <a href="https://github.com/fredwye/vibe-coding">dépôt GitHub fredwye/vibe-coding</a>.</li>
+      <li>Licence : <strong>MIT</strong>, © 2026 Atelier Frédéric K (fichier <code>LICENSE</code> à la racine du dépôt). Vous pouvez réutiliser, modifier et redistribuer le code, à condition de conserver la mention de copyright et le texte de la licence.</li>
+      <li>Le site reprend une base issue du dépôt du cours (claude_prime). Licence de ce dépôt d'origine : <span class="todo">[À COMPLÉTER]</span>.</li>
+    </ul>
+
+    <h2>Hébergement et services</h2>
+    <ul>
+      <li><strong>Cloudflare Pages</strong> : hébergement des pages publiques. Service de Cloudflare, Inc., utilisé selon ses conditions d'utilisation.</li>
+      <li><strong>Cloudflare Workers</strong> : API de la console d'édition (<code>claude-prime-api</code>), avec <strong>R2</strong> (stockage des fiches) et <strong>D1</strong> (base SQL), tous deux en juridiction Union européenne.</li>
+      <li><strong>Cloudflare Access</strong> : authentification des personnes autorisées à modifier les fiches.</li>
+      <li><strong>Cloudflare Turnstile</strong> : vérification anti-robots du formulaire de commentaires. Seule la console d'édition charge son script, depuis <code>challenges.cloudflare.com</code>.</li>
+    </ul>
+
+    <h2>Bibliothèques tierces</h2>
+    <ul>
+      <li>Pages publiques : <strong>aucune bibliothèque, aucun script ni police externe</strong>. HTML, CSS et JavaScript sont écrits pour le projet.</li>
+      <li>API (Worker) : <strong>aucune dépendance embarquée</strong> dans le code mis en ligne.</li>
+      <li>Outils de développement (non publiés sur le site) : <strong>Wrangler</strong> (Cloudflare, licence MIT ou Apache 2.0) et ses dépendances, sous licences permissives MIT, Apache 2.0, BSD, ISC, 0BSD et CC0. Les modules facultatifs <code>@img/sharp-libvips-*</code> sont sous LGPL 3.0 : ils servent seulement à l'outil sur l'ordinateur du développeur et ne sont ni intégrés ni distribués avec le site.</li>
+    </ul>
+
+    <h2>Ressources graphiques</h2>
+    <ul>
+      <li>Polices : polices système de l'appareil du visiteur (<code>system-ui</code>). Aucune police n'est téléchargée depuis un service tiers.</li>
+      <li>Icônes et images : aucune icône ni image tierce.</li>
+    </ul>
+
+    <h2>Contenus cités</h2>
+    <ul>
+      <li>La page <a href="outils.html">Inventaire des outils</a> compare un post publié sur X et la liste <a href="https://github.com/Scap-Mehdi/awesome-vibecoding">awesome-vibecoding</a> (licence CC0 1.0). Les descriptions sont reformulées. Les noms, marques et logos cités appartiennent à leurs titulaires respectifs.</li>
+    </ul>
+
+    <h2>Transparence sur l'usage de l'IA</h2>
+    <ul>
+      <li>Ce site a été réalisé en <strong>vibe-coding</strong> : le code et une partie des textes ont été produits avec des assistants d'IA (Claude d'Anthropic, ChatGPT d'OpenAI) à partir de consignes rédigées par l'auteur.</li>
+      <li>Le code de l'API (dossier <code>worker/</code>) a été généré en grande partie par Claude, puis relu, testé (tests automatisés) et validé par l'auteur avant chaque mise en ligne.</li>
+      <li>Les choix de structure, de contenu et de mise en ligne sont ceux de l'auteur, qui relit systématiquement ce qui est publié.</li>
+    </ul>
+
+    <h2>Réservation des droits de fouille de textes et de données</h2>
+    <p>Conformément à l'article L. 122-5-3 du Code de la propriété intellectuelle et à l'article 4 de la directive (UE) 2019/790, l'éditeur s'oppose expressément à la fouille de textes et de données des contenus de ce site à des fins d'entraînement de modèles d'intelligence artificielle. Ce refus est aussi exprimé de façon lisible par machine dans le fichier <a href="robots.txt">robots.txt</a>.</p>
+
+    <h2>Mise à jour</h2>
+    <p>Page mise à jour le 26 novembre 2026.</p>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <nav aria-label="Pied de page" class="foot-nav">
+      <ul>
+        <li><a href="aide.html">Aide</a></li>
+        <li><a href="info-site.html">Info site</a></li>
+        <li><a href="accessibilite.html">Accessibilité : non conforme</a></li>
+        <li><a href="index.html">Site de Organisme de démonstration</a></li>
+        <li><a href="donnees-personnelles.html">Cookies / Données personnelles</a></li>
+        <li><a href="mentions-legales.html">Mentions légales</a></li>
+        <li><a href="credits.html" aria-current="page">Crédits et propriété intellectuelle</a></li>
+      </ul>
+    </nav>
+    <p>© <span id="y">2026</span> Mon site</p>
+  </div>
+</footer>
+</body>
+</html>
