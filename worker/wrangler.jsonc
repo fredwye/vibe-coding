@@ -34,8 +34,8 @@
   // Valeurs NON secrètes. Laisser vide tant que l'étape correspondante n'est pas faite.
   // La clé secrète Turnstile ne va JAMAIS ici : secret TURNSTILE_SECRET_KEY dans le tableau de bord.
   "vars": {
-    "ACCESS_TEAM_DOMAIN": "",
-    "ACCESS_AUD": "",
+    "ACCESS_TEAM_DOMAIN": "https://fdc-vibe-coding.cloudflareaccess.com",
+    "ACCESS_AUD": "2e342a415fde8b2fb3cb86add8bfc468e70cde790faa50e724939f705ac20f14",
     "TURNSTILE_SITE_KEY": "0x4AAAAAAGUix9EN3DENhvR6"
   }
 }
