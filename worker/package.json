@@ -1,0 +1,13 @@
+{
+  "name": "claude-prime-api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "deploy": "wrangler deploy",
+    "schema:remote": "wrangler d1 execute claude-prime-db --remote --file=schema.sql"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

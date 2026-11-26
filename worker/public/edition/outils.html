@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Édition des fiches outils</title>
+<meta name="robots" content="noindex">
+<style>
+  :root{--bg:#f6f4ef;--surface:#fff;--ink:#1c1b19;--muted:#6b675f;--line:#e2ded5;--a:#c2410c;--ok:#15803d;--ok-soft:#e3f4e8;--warn:#a16207;--warn-soft:#fbf1d6;--err:#b91c1c}
+  @media (prefers-color-scheme: dark){:root{--bg:#141413;--surface:#1d1c1a;--ink:#ecebe6;--muted:#a29e94;--line:#33312d;--a:#fb923c;--ok:#4ade80;--ok-soft:#163020;--warn:#facc15;--warn-soft:#352c10;--err:#f87171}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:960px;margin:0 auto;padding:32px 16px 80px}
+  h1{font-size:clamp(26px,4vw,38px);line-height:1.1;margin:0 0 8px}
+  .kicker{font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:0 0 8px}
+  .etat{padding:12px 16px;border-radius:10px;margin:16px 0;border:1px solid var(--line);background:var(--surface)}
+  .etat.ok{background:var(--ok-soft);border-color:transparent}
+  .etat.ko{background:var(--warn-soft);border-color:transparent}
+  .outils{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+  input,select,textarea,button{font:inherit;color:var(--ink)}
+  input[type=search],select{padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+  input[type=search]{flex:1;min-width:200px}
+  .fiche{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+  .fiche h2{font-size:19px;margin:0 0 4px}
+  .meta{font-size:13px;color:var(--muted)}
+  .tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);background:var(--bg)}
+  details{margin-top:10px}
+  summary{cursor:pointer;color:var(--a)}
+  label{display:block;font-size:14px;margin:10px 0 4px}
+  .champ{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+  textarea.champ{min-height:80px}
+  button{padding:8px 14px;border-radius:8px;border:1px solid var(--a);background:var(--a);color:#fff;cursor:pointer;margin-top:10px}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  button.secondaire{background:transparent;color:var(--ink);border-color:var(--line)}
+  .msg{font-size:14px;margin-top:6px}
+  .msg.ok{color:var(--ok)} .msg.err{color:var(--err)}
+  ul.commentaires{list-style:none;padding:0;margin:8px 0}
+  ul.commentaires li{border-top:1px solid var(--line);padding:8px 0;font-size:15px}
+  .pagination{display:flex;gap:10px;align-items:center;margin:20px 0}
+  a{color:inherit;text-underline-offset:3px}
+  :focus-visible{outline:3px solid currentColor;outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kicker">Console d'édition · protégée par Cloudflare Access</p>
+  <h1>Fiches outils de vibe-coding</h1>
+  <div id="etat" class="etat" role="status">Chargement…</div>
+
+  <form class="outils" id="filtres" role="search">
+    <input type="search" id="q" placeholder="Rechercher (nom, description)…" aria-label="Rechercher">
+    <select id="categorie" aria-label="Catégorie"><option value="">Toutes les catégories</option></select>
+    <select id="tri" aria-label="Trier par">
+      <option value="nom">Tri : nom</option>
+      <option value="categorie">Tri : catégorie</option>
+      <option value="recent">Tri : dernières modifiées</option>
+    </select>
+  </form>
+
+  <div id="liste" aria-live="polite"></div>
+  <div class="pagination">
+    <button type="button" class="secondaire" id="prec">← Précédent</button>
+    <span id="pageInfo" class="meta"></span>
+    <button type="button" class="secondaire" id="suiv">Suivant →</button>
+  </div>
+</div>
+
+<script>
+const S = { ecriture: false, siteKey: null, page: 1, total: 0, parPage: 10, d1: true };
+const $ = (id) => document.getElementById(id);
+const echap = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+async function api(chemin, options) {
+  const rep = await fetch(chemin, Object.assign({ credentials: "same-origin" }, options));
+  let donnees = {};
+  try { donnees = await rep.json(); } catch {}
+  if (!rep.ok) throw new Error(donnees.erreur || ("Erreur " + rep.status));
+  return donnees;
+}
+
+function chargerTurnstile() {
+  if (!S.siteKey || window.turnstile) return;
+  const s = document.createElement("script");
+  s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+  s.async = true; s.defer = true;
+  document.head.appendChild(s);
+}
+
+async function chargerEtat() {
+  const etat = $("etat");
+  try {
+    const e = await api("/api/etat");
+    S.ecriture = e.ecriture; S.siteKey = e.turnstileSiteKey;
+    if (e.ecriture) {
+      etat.className = "etat ok";
+      etat.textContent = "Connecté : " + e.email + ". Vous pouvez modifier les fiches et commenter."
+        + (e.initialisees ? " (" + e.initialisees + " fiches initiales créées.)" : "");
+    } else {
+      etat.className = "etat ko";
+      etat.textContent = "Modification désactivée" + (e.raison ? " — " + e.raison : " — Cloudflare Access n'est pas encore configuré.");
+    }
+    chargerTurnstile();
+  } catch (err) {
+    etat.className = "etat ko"; etat.textContent = "API injoignable : " + err.message;
+  }
+}
+
+async function chargerCategories() {
+  try {
+    const { categories } = await api("/api/categories");
+    $("categorie").insertAdjacentHTML("beforeend",
+      categories.map((c) => `<option value="${echap(c.categorie)}">${echap(c.categorie)} (${c.n})</option>`).join(""));
+  } catch { S.d1 = false; }
+}
+
+function htmlFiche(f) {
+  const ro = S.ecriture ? "" : "disabled";
+  return `<article class="fiche" data-id="${echap(f.id)}">
+    <h2><a href="${echap(f.url)}" rel="noopener">${echap(f.nom)}</a></h2>
+    <p>${echap(f.description)}</p>
+    <p class="meta"><span class="tag">${echap(f.categorie)}</span> · version ${f.version}
+      ${f.modifie_par || f.modifiePar ? " · modifiée par " + echap(f.modifie_par || f.modifiePar) : ""}
+      ${f.nb_commentaires !== undefined ? " · " + f.nb_commentaires + " commentaire(s)" : ""}</p>
+    <details><summary>Modifier la fiche</summary>
+      <form class="f-edit">
+        <label>Nom<input class="champ" name="nom" value="${echap(f.nom)}" ${ro} required maxlength="120"></label>
+        <label>Description<textarea class="champ" name="description" ${ro} maxlength="1000">${echap(f.description)}</textarea></label>
+        <label>Catégorie<input class="champ" name="categorie" value="${echap(f.categorie)}" ${ro} maxlength="60"></label>
+        <button ${ro}>Enregistrer</button><div class="msg" role="status"></div>
+      </form>
+    </details>
+    <details class="d-com"><summary>Commentaires</summary>
+      <ul class="commentaires"></ul>
+      <form class="f-com">
+        <input type="hidden" name="fiche" value="${echap(f.id)}">
+        <label>Ajouter un commentaire<textarea class="champ" name="texte" ${ro} required maxlength="2000"></textarea></label>
+        <div class="ts"></div>
+        <button ${ro}>Ajouter un commentaire</button><div class="msg" role="status"></div>
+      </form>
+    </details>
+  </article>`;
+}
+
+async function chargerListe() {
+  const liste = $("liste");
+  let fiches;
+  if (S.d1) {
+    const p = new URLSearchParams({ q: $("q").value, categorie: $("categorie").value, tri: $("tri").value, page: S.page });
+    try {
+      const r = await api("/api/recherche?" + p);
+      fiches = r.fiches; S.total = r.total; S.parPage = r.parPage;
+    } catch { S.d1 = false; }
+  }
+  if (!S.d1) { // Repli sans D1 : lecture directe depuis R2, sans recherche ni pagination
+    const { fiches: parId } = await api("/api/fiches");
+    fiches = Object.values(parId).sort((a, b) => a.nom.localeCompare(b.nom));
+    S.total = fiches.length; S.parPage = fiches.length || 1; S.page = 1;
+  }
+  liste.innerHTML = fiches.length ? fiches.map(htmlFiche).join("")
+    : `<p class="meta">Aucune fiche. ${S.ecriture ? "" : "Elles seront créées à la première connexion autorisée."}</p>`;
+  const pages = Math.max(1, Math.ceil(S.total / S.parPage));
+  $("pageInfo").textContent = `Page ${S.page} / ${pages} · ${S.total} fiche(s)`;
+  $("prec").disabled = S.page <= 1; $("suiv").disabled = S.page >= pages;
+}
+
+async function chargerCommentaires(article) {
+  const ul = article.querySelector("ul.commentaires");
+  try {
+    const { commentaires } = await api("/api/commentaires?fiche=" + encodeURIComponent(article.dataset.id));
+    ul.innerHTML = commentaires.length ? commentaires.map((c) =>
+      `<li><span class="meta">${echap(c.auteur_email)} · ${echap(c.cree_le)}</span><br>${echap(c.texte)}</li>`).join("")
+      : `<li class="meta">Pas encore de commentaire.</li>`;
+  } catch (e) { ul.innerHTML = `<li class="meta">${echap(e.message)}</li>`; }
+  const zone = article.querySelector(".ts");
+  if (S.ecriture && S.siteKey && window.turnstile && !zone.dataset.widget) {
+    zone.dataset.widget = turnstile.render(zone, { sitekey: S.siteKey, language: "fr" });
+  }
+}
+
+$("liste").addEventListener("toggle", (e) => {
+  if (e.target.classList.contains("d-com") && e.target.open) chargerCommentaires(e.target.closest(".fiche"));
+}, true);
+
+$("liste").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target, article = form.closest(".fiche"), msg = form.querySelector(".msg");
+  msg.className = "msg"; msg.textContent = "Envoi…";
+  try {
+    if (form.classList.contains("f-edit")) {
+      const d = Object.fromEntries(new FormData(form));
+      const r = await api("/api/fiches/" + encodeURIComponent(article.dataset.id), {
+        method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify(d) });
+      msg.className = "msg ok"; msg.textContent = "Fiche enregistrée (version " + r.fiche.version + ").";
+    } else {
+      await api("/api/commentaires", { method: "POST", body: new FormData(form) });
+      form.querySelector("textarea").value = "";
+      msg.className = "msg ok"; msg.textContent = "Commentaire ajouté.";
+      await chargerCommentaires(article);
+    }
+  } catch (err) {
+    msg.className = "msg err"; msg.textContent = err.message;
+  } finally {
+    const zone = form.querySelector(".ts");
+    if (zone && zone.dataset.widget && window.turnstile) turnstile.reset(zone.dataset.widget); // jeton à usage unique
+  }
+});
+
+let minuteur;
+$("q").addEventListener("input", () => { clearTimeout(minuteur); minuteur = setTimeout(() => { S.page = 1; chargerListe(); }, 250); });
+$("categorie").addEventListener("change", () => { S.page = 1; chargerListe(); });
+$("tri").addEventListener("change", () => { S.page = 1; chargerListe(); });
+$("filtres").addEventListener("submit", (e) => e.preventDefault());
+$("prec").addEventListener("click", () => { S.page--; chargerListe(); });
+$("suiv").addEventListener("click", () => { S.page++; chargerListe(); });
+
+(async () => { await chargerEtat(); await chargerCategories(); await chargerListe(); })();
+</script>
+</body>
+</html>

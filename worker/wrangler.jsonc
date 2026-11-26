@@ -1,0 +1,41 @@
+{
+  // Worker API du cours vibe-coding (exercices R2 + Access, D1, Turnstile)
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "claude-prime-api",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": true,
+
+  // Page d'édition servie par le Worker : /edition/outils.html
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+
+  // Exercice R2 : bucket créé dans le tableau de bord avec « Specify jurisdiction → European Union »
+  "r2_buckets": [
+    {
+      "binding": "OUTILS",
+      "bucket_name": "claude-prime-outils",
+      "jurisdiction": "eu"
+    }
+  ],
+
+  // Exercice D1 : base claude-prime-db créée avec la juridiction Union européenne
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "claude-prime-db",
+      "database_id": "22ace9ae-0653-4fe2-8362-2fae41a65daa"
+    }
+  ],
+
+  // Valeurs NON secrètes. Laisser vide tant que l'étape correspondante n'est pas faite.
+  // La clé secrète Turnstile ne va JAMAIS ici : secret TURNSTILE_SECRET_KEY dans le tableau de bord.
+  "vars": {
+    "ACCESS_TEAM_DOMAIN": "",
+    "ACCESS_AUD": "",
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAGUix9EN3DENhvR6"
+  }
+}
