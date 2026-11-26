@@ -1,0 +1,44 @@
+# robots.txt — refus de la fouille de textes et de données (TDM) pour l'entraînement d'IA
+# Réservation expresse des droits au titre de l'article L. 122-5-3 du Code de la propriété
+# intellectuelle et de l'article 4 de la directive (UE) 2019/790.
+# Les moteurs de recherche classiques (Googlebot, Bingbot…) restent autorisés.
+
+# Signal lisible par machine (Content Signals) : recherche oui, entraînement d'IA non
+User-agent: *
+Content-Signal: search=yes, ai-train=no
+Allow: /
+
+# OpenAI — entraînement
+User-agent: GPTBot
+Disallow: /
+
+# Anthropic — entraînement
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+# Common Crawl — corpus utilisé pour entraîner de nombreux modèles
+User-agent: CCBot
+Disallow: /
+
+# Google — jeton d'entraînement Gemini (n'affecte pas Google Search)
+User-agent: Google-Extended
+Disallow: /
+
+# Apple — jeton d'entraînement (n'affecte pas la recherche Apple)
+User-agent: Applebot-Extended
+Disallow: /
+
+# Meta — entraînement
+User-agent: meta-externalagent
+Disallow: /
+
+# ByteDance — entraînement
+User-agent: Bytespider
+Disallow: /
+
+# Cohere — entraînement
+User-agent: cohere-training-data-crawler
+Disallow: /
